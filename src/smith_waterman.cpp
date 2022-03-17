@@ -1,6 +1,12 @@
+/*===========================================================
+# Author:       Eiki Yamashiro
+# Github:       github.com/Eikinho/smith_waterman
+# FileName:     smith_waterman.cpp
+# Email:        eikisantos@outlook.com
+# Version:      0.0.1
+===========================================================*/
+
 #include "aux.hpp"
-
-
 
 int main()
 {

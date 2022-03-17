@@ -1,3 +1,11 @@
+/*===========================================================
+# Author:       Eiki Yamashiro
+# Github:       github.com/Eikinho/smith_waterman
+# FileName:     aux.hpp
+# Email:        eikisantos@outlook.com
+# Version:      0.0.1
+===========================================================*/
+
 #ifndef __AUX_HPP_
 #define __AUX_HPP_
 

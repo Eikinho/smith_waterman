@@ -1,3 +1,11 @@
+/*===========================================================
+# Author:       Eiki Yamashiro
+# Github:       github.com/Eikinho/smith_waterman
+# FileName:     aux.cpp
+# Email:        eikisantos@outlook.com
+# Version:      0.0.1
+===========================================================*/
+
 #include <iostream>
 #include <vector>
 #include <bits/stdc++.h>
