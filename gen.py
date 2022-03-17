@@ -1,5 +1,5 @@
 import random
-n = 5
+n = 9
 m = 8
 file = 'dna.seq'
 f = open(file, 'w')

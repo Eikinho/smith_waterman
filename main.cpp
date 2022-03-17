@@ -41,7 +41,6 @@ Cursor init()
         cin >> base;
         seqOne.push_back(base);
     }
-
     for (int i=0; i < m; i++)
     {
         char base;
@@ -68,7 +67,7 @@ void cout_sequency_init(Sequency sequency)
 {
     cout << "Sequency " << sequency.id << ": "; 
 
-    for (int i=0; i < sequency.size; i++)
+    for (int i=0; i <= sequency.size; i++)
     {
         cout << sequency.sequency[i];
     }
@@ -79,7 +78,7 @@ void cout_sequency_init(Sequency sequency)
 void cout_sequency(Sequency sequency)
 {
 
-    for (int i=0; i < sequency.size; i++)
+    for (int i=0; i <= sequency.size; i++)
     {
         cout << sequency.sequency[i] << " ";
     }
@@ -90,15 +89,15 @@ void cout_sequency(Sequency sequency)
 vector<vector<int>> create_matrix(Sequency seqOne, Sequency seqTwo)
 {
     vector<vector<int>> matrix;
-    matrix.resize(seqOne.size);
+    matrix.resize(seqOne.size + 1);
 
-    for (int i=0; i < seqOne.size; i++)
+    for (int i=0; i <= seqOne.size; i++)
     {
-        matrix[i].resize(seqTwo.size);
+        matrix[i].resize(seqTwo.size + 1);
     }
 
 
-    for (int i=0; i < seqOne.size; i++)
+    for (int i=0; i <= seqOne.size; i++)
     {
         for (int j=0; j < seqTwo.size; j++)
         {
@@ -109,15 +108,15 @@ vector<vector<int>> create_matrix(Sequency seqOne, Sequency seqTwo)
     return matrix;
 }
 
-void cout_matrix(Cursor cursor, int i_, int j_)
+void cout_matrix(Cursor cursor)
 {
-    cout << "  ";
+    cout << "S ";
     cout_sequency(cursor.two);
 
-    for (int i=0; i < i_; i++)
+    for (int i=0; i <= cursor.one.size; i++)
     {
-        cout << cursor.two.sequency[i] << " ";
-        for (int j=0; j < j_; j++)
+        cout << cursor.one.sequency[i] << " ";
+        for (int j=0; j <= cursor.two.size; j++)
         {
             cout << cursor.matrix[i][j] << " ";
         }
@@ -157,9 +156,9 @@ vector<vector<int>> smith_waterman(Cursor cursor)
     int insertion = 0;
     int temp_max = 0;
 
-    for (int i = 1; i < cursor.one.size; i++)
+    for (int i = 1; i <= cursor.one.size; i++)
     {
-        for (int j = 1; j < cursor.two.size; j++)
+        for (int j = 1; j <= cursor.two.size; j++)
         {
             diagonal = cursor.matrix[i-1][j-1] + mini_score(cursor, i,  j);
             deletion = cursor.matrix[i-1][j] - 1;
@@ -175,6 +174,8 @@ vector<vector<int>> smith_waterman(Cursor cursor)
     
     return cursor.matrix;
 }
+
+
 
 int main()
 {
@@ -192,7 +193,7 @@ int main()
     cout << endl;
 
     cursor.matrix = smith_waterman(cursor);
-    cout_matrix(cursor, cursor.one.size, cursor.two.size);
+    cout_matrix(cursor);
     cout << endl;
     return 0;
 } 
