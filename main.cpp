@@ -15,10 +15,15 @@ struct Sequency {
     vector<char> sequency;
 };
 
+struct SmithWaterman {
+    int score;
+    vector<vector<int>> matrix;
+};
+
 struct Cursor {
     Sequency one;
     Sequency two;
-    vector<vector<int>> matrix;
+    SmithWaterman smith_waterman;
 };
 
 Cursor init()
@@ -118,7 +123,7 @@ void cout_matrix(Cursor cursor)
         cout << cursor.one.sequency[i] << " ";
         for (int j=0; j <= cursor.two.size; j++)
         {
-            cout << cursor.matrix[i][j] << " ";
+            cout << cursor.smith_waterman.matrix[i][j] << " ";
         }
         
         cout << endl;
@@ -160,29 +165,43 @@ vector<vector<int>> smith_waterman(Cursor cursor)
     {
         for (int j = 1; j <= cursor.two.size; j++)
         {
-            diagonal = cursor.matrix[i-1][j-1] + mini_score(cursor, i,  j);
-            deletion = cursor.matrix[i-1][j] - 1;
-            insertion = cursor.matrix[i][j-1] - 1;
+            diagonal = cursor.smith_waterman.matrix[i-1][j-1] + mini_score(cursor, i,  j);
+            deletion = cursor.smith_waterman.matrix[i-1][j] - 1;
+            insertion = cursor.smith_waterman.matrix[i][j-1] - 1;
             temp_max = max(deletion, max(diagonal, insertion));
             if (temp_max < 0)
              {
                  temp_max = 0;
              }
-             cursor.matrix[i][j] = temp_max;
+             cursor.smith_waterman.matrix[i][j] = temp_max;
         }
     }
     
-    return cursor.matrix;
+    return cursor.smith_waterman.matrix;
 }
 
-
+int score(Cursor cursor)
+{
+    int max = 0;
+    for (int i=0; i <= cursor.one.size; i++)
+    {
+        for (int j=0; j <= cursor.two.size; j++)
+        {   
+            if (cursor.smith_waterman.matrix[i][j] > max)
+            {
+                max = cursor.smith_waterman.matrix[i][j];
+            }
+        }
+    }
+    return max;
+}
 
 int main()
 {
     // reading .txt file that contains the both sequencies. Create the cursor. 
     Cursor cursor = init();
     
-    cursor.matrix = create_matrix(cursor.one, cursor.two);
+    cursor.smith_waterman.matrix = create_matrix(cursor.one, cursor.two);
     cout_sequency_init(cursor.one);
     cout_sequency_init(cursor.two);
     cout << endl;
@@ -192,8 +211,15 @@ int main()
     cout << "Matrix Output:" << endl;
     cout << endl;
 
-    cursor.matrix = smith_waterman(cursor);
+    cursor.smith_waterman.matrix = smith_waterman(cursor);
     cout_matrix(cursor);
+    
     cout << endl;
+    cout << "---------------------------------" << endl;
+    cout << endl;
+
+    cursor.smith_waterman.score = score(cursor);
+
+    cout << "Score: " << cursor.smith_waterman.score << endl;
     return 0;
 } 
