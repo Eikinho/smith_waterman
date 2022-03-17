@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/aux.hpp
+iostream
+-
+bits/stdc++.h
+-
+vector
+-
+
+/home/eiki/Desktop/smith_waterman/libs/aux/aux.cpp
+iostream
+-
+vector
+-
+bits/stdc++.h
+-
+aux.hpp
+/home/eiki/Desktop/smith_waterman/libs/aux/aux.hpp
+

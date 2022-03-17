@@ -1,0 +1,2 @@
+/bin/ar qc libaux.a  CMakeFiles/aux.dir/libs/aux/aux.cpp.o
+/bin/ranlib libaux.a

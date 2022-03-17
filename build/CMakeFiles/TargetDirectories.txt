@@ -1,0 +1,4 @@
+/home/eiki/Desktop/smith_waterman/build/CMakeFiles/rebuild_cache.dir
+/home/eiki/Desktop/smith_waterman/build/CMakeFiles/edit_cache.dir
+/home/eiki/Desktop/smith_waterman/build/CMakeFiles/exe.dir
+/home/eiki/Desktop/smith_waterman/build/CMakeFiles/aux.dir
