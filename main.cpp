@@ -3,6 +3,10 @@
 #include <bits/stdc++.h>
 #include <random>
 
+#define MATCH 2
+#define MISMATCH -1
+#define GAP -1
+
 using namespace std;
 
 struct Sequency {
@@ -19,10 +23,10 @@ struct Cursor {
 
 Cursor init()
 {
-    cout << "----SMITH--WATERMAN----" << endl;
-    cout << "--by--eiki--yamashiro--" << endl;
+    cout << "---------SMITH--WATERMAN---------" << endl;
+    cout << "-------by--eiki--yamashiro-------" << endl;
     cout << endl;
-
+    cout << "Match: " << MATCH << " | " << "Mismatch: " << MISMATCH << " | " "Gap: " << GAP << endl;
     int m, n;
     cin >> n >> m;
 
@@ -60,13 +64,24 @@ Cursor init()
     return return_cursor;
 }
 
-void cout_sequency(Sequency sequency)
+void cout_sequency_init(Sequency sequency)
 {
     cout << "Sequency " << sequency.id << ": "; 
 
     for (int i=0; i < sequency.size; i++)
     {
         cout << sequency.sequency[i];
+    }
+
+    cout << endl;
+}
+
+void cout_sequency(Sequency sequency)
+{
+
+    for (int i=0; i < sequency.size; i++)
+    {
+        cout << sequency.sequency[i] << " ";
     }
 
     cout << endl;
@@ -94,19 +109,72 @@ vector<vector<int>> create_matrix(Sequency seqOne, Sequency seqTwo)
     return matrix;
 }
 
-void cout_matrix(vector<vector<int>> matrix, int i_, int j_)
+void cout_matrix(Cursor cursor, int i_, int j_)
 {
+    cout << "  ";
+    cout_sequency(cursor.two);
+
     for (int i=0; i < i_; i++)
     {
+        cout << cursor.two.sequency[i] << " ";
         for (int j=0; j < j_; j++)
         {
-            matrix[i][j] = 0;
-            cout << matrix[i][j] << " ";
+            cout << cursor.matrix[i][j] << " ";
         }
+        
         cout << endl;
+        
+        
     }
 }
 
+int mini_score(Cursor cursor, int i, int j)
+{
+    if (cursor.one.sequency[i] == cursor.two.sequency[j])
+    {
+        return MATCH;
+    }
+    
+    else if (cursor.one.sequency[i] != cursor.two.sequency[j])
+    {
+        return MISMATCH;
+    } 
+    else if (cursor.one.sequency[i] == '-')
+    {
+        return GAP;
+    }
+    else if (cursor.two.sequency[j] == '-')
+    {
+        return GAP;
+    }
+    return 0;
+}
+
+vector<vector<int>> smith_waterman(Cursor cursor)
+{
+    int diagonal = 0;
+    int deletion = 0;
+    int insertion = 0;
+    int temp_max = 0;
+
+    for (int i = 1; i < cursor.one.size; i++)
+    {
+        for (int j = 1; j < cursor.two.size; j++)
+        {
+            diagonal = cursor.matrix[i-1][j-1] + mini_score(cursor, i,  j);
+            deletion = cursor.matrix[i-1][j] - 1;
+            insertion = cursor.matrix[i][j-1] - 1;
+            temp_max = max(deletion, max(diagonal, insertion));
+            if (temp_max < 0)
+             {
+                 temp_max = 0;
+             }
+             cursor.matrix[i][j] = temp_max;
+        }
+    }
+    
+    return cursor.matrix;
+}
 
 int main()
 {
@@ -114,13 +182,17 @@ int main()
     Cursor cursor = init();
     
     cursor.matrix = create_matrix(cursor.one, cursor.two);
+    cout_sequency_init(cursor.one);
+    cout_sequency_init(cursor.two);
+    cout << endl;
+    cout << "---------------------------------" << endl;
+    cout << endl;
 
+    cout << "Matrix Output:" << endl;
+    cout << endl;
 
-
-    cout_sequency(cursor.one);
-    cout_sequency(cursor.two);
-    cout_matrix(cursor.matrix, cursor.one.size, cursor.two.size);
-    
-
+    cursor.matrix = smith_waterman(cursor);
+    cout_matrix(cursor, cursor.one.size, cursor.two.size);
+    cout << endl;
     return 0;
-}
+} 
